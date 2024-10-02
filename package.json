@@ -1,0 +1,20 @@
+{
+  "name": "cours_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "nodemon": "^3.1.7"
+  }
+}
