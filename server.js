@@ -2,16 +2,14 @@ import http from "http";
 import chalk from "chalk"
 import fs from "fs";
 
+import writeHead from "./helpers/writeHead.js";
+
 http.createServer((req, res) => {
 
-    //res.writeHead(200, "Tout est OK", { "Content-Type": "text/css,text/html", "Content-Length" : Buffer.byteLength(fs.readFileSync("./index.html", "utf8") + fs.readFileSync("./style.css", "utf8")) });
-    //res.write(fs.readFileSync("./style.css", "utf8"));
-    //res.end(fs.readFileSync("./index.html", "utf8"));
-
     if (req.url === "/") {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.write(fs.readFileSync("./index.html", "utf-8"));
-        res.end();
+        writeHead(res, "All good", "text/html", fs.readFileSync("./index.html"));
+        res.write(fs.readFileSync("./index.html"));
+        res.end()
     }
 
     if (req.url === "/form.html") {
@@ -26,6 +24,37 @@ http.createServer((req, res) => {
         res.end();
     }
 
+
+    if (req.url === "/img/chat" && req.method === "GET") {
+        const img = fs.readFileSync("./chat.png");
+        const filename = "chat.png"
+        const file_extension = filename.split('.').pop();
+        let ctype = "";
+
+        switch( file_extension ) {
+            case "gif":
+                ctype="image/gif";
+                break;
+            case "png":
+                ctype="image/png";
+                break;
+            case "jpeg":
+            case "jpg":
+                ctype="image/jpeg";
+                break;
+            case "svg":
+                ctype="image/svg+xml";
+                break;
+            default:
+        }
+
+        writeHead(res, "All good", ctype, img);
+        res.write(img);
+        res.end();
+    }
+
+
+
 }).listen(3000, () => {
-    console.log(chalk.green(), "Server started on port 3000");
+    console.log(chalk.blue("Server started on port 3000"));
 });
